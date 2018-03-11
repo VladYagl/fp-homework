@@ -18,7 +18,15 @@ tested-with:         GHC == 8.0.1
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Lib
+  exposed-modules:     Lib, Town, Lists, Simple, Weekday, Nat, Tree, Fold, Monoids
   ghc-options:         -Wall
-  build-depends:       base >= 4.9 && < 5
+  build-depends:       random, base >= 4.9 && < 5
+  default-language:    Haskell2010
+
+executable test
+  hs-source-dirs:      src
+  other-modules:       Lib, Town, Lists, Simple, Weekday, Nat, Tree, Fold, Monoids
+  main-is:             Test.hs
+  ghc-options:         -Wall
+  build-depends:       random, base >= 4.9 && < 5
   default-language:    Haskell2010

@@ -66,3 +66,10 @@ packages:
 #
 # Allow a newer minor version of GHC than the snapshot specifies
 # compiler-check: newer-minor
+extra-deps:
+    - https://hackage.haskell.org/package/ghc-mod-5.9.0.0/candidate/ghc-mod-5.9.0.0.tar.gz
+    - cabal-helper-0.8.0.0
+    - extra-1.5.3
+    - monad-journal-0.7.2
+    - optparse-applicative-0.13.2.0
+    - either-4.4.1.1
