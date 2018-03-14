@@ -30,7 +30,7 @@ randomIntList n from to = take n . randomRs (from, to) <$> newStdGen
 
 
 printTree :: Show a => Tree a -> Int -> String
-printTree Leaf _         = ""
+printTree Leaf _         = "Leaf\n"
 printTree Node{..} level =
     replicate level '|' ++ "Node: " ++ (show info) ++ "\n" ++ printTree left (level + 1) ++ printTree right (level + 1)
 
@@ -54,7 +54,7 @@ foldTest = do
     print $ foldr (-) (1000 :: Int) (Pair 1 100)
     print $ foldr (-) (1000 :: Int) (1 :| [10, 100])
     print $ splitOn '/' "path/to/file"
-    print $ splitOn '/' "path/to/file"
+    print $ splitOn '/' "/path//to/file/"
     print $ joinWith '/' ("path" :| ["to", "file"])
     print $ joinWith '|' . splitOn '/' $ "path/to/file"
 
@@ -107,6 +107,8 @@ treeTest = do
     let tree = 3 `delete` (10 `insert` (fromList [1, 2, 3, 4, 5] :: Tree Int))
     print (foldr (+) 100 tree)
     print (find 2 tree)
+    putStrLn "\n"
+    print $ 1 `delete` (fromList [1] :: Tree Int)
 
 listTest :: IO()
 listTest = do
