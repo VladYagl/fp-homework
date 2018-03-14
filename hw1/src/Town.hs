@@ -1,10 +1,11 @@
 module Town
-       ( Building
-       , Castle
+       ( Building(..)
+       , BuildResult(..)
+       , Castle(..)
        , House
-       , Lord
+       , Lord(..)
        , Town
-       , Walls
+       , Walls(..)
        , emptyTown
        , house
        , town
@@ -60,7 +61,7 @@ buildCastle curTown newCastle = case castle curTown of
     Nothing -> Success (curTown { castle = Just newCastle })
 
 buildInTown :: Town -> Building -> BuildResult Town
-buildInTown _ None                                        = Failure "Can't build nothing"
+buildInTown _ None = Failure "Can't build nothing"
 buildInTown curTown@(BuildTown{ building = None }) newBuilding = Success (curTown{building = newBuilding})
 buildInTown curTown _ = Failure ("There are already " ++ (show (building curTown)) ++ " in Town")
 
@@ -77,7 +78,9 @@ addLord BuildTown{castle = Nothing} _ = Failure "There is no castle in town"
 addLord BuildTown{lord = Just _} _ = Failure "There is already lord in town"
 
 buildWalls :: Town -> Walls -> BuildResult Town
-buildWalls curTown@(BuildTown{houses = curHouses, walls = Nothing}) newWalls
+buildWalls curTown@(BuildTown{houses = curHouses, walls = Nothing, lord = Just _, castle = Just _}) newWalls
     | sum (map familySize curHouses) >= 10 = Success (curTown{walls = Just newWalls})
     | otherwise = Failure "Not enough civilians"
 buildWalls BuildTown{walls = Just _} _ = Failure "There are already walls in town"
+buildWalls BuildTown{lord = Nothing} _ = Failure "There are no lord in town"
+buildWalls BuildTown{castle = Nothing} _ = Failure "There are no castle in town"

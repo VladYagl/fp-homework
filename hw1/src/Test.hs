@@ -67,10 +67,30 @@ weekTest = do
     print $ map daysToParty [Monday, Friday, Sunday, Saturday]
     print $ map nextDay [Monday, Friday, Sunday, Saturday]
 
+unbox :: BuildResult a -> a
+unbox (Success x)       = x
+unbox (Failure message) = error ("Failed unbox: " ++ message)
+
 townTest :: IO()
 townTest = do
-    print $ emptyTown
-    print $ house 10
+    print $ town Nothing Library Nothing Nothing [unbox $ house 3]
+    print $ town Nothing Library (Just Lord) (Just Walls) [unbox $ house 3]
+    print $ town Nothing Library Nothing Nothing [unbox $ house 3]
+    putStrLn "\n\n"
+    let t = emptyTown
+    print t
+    let t1 = unbox $ buildInTown t Library
+    print t1
+    let t3 = unbox $ buildHouse (unbox $ buildHouse (unbox $ buildHouse t1 4) 4) 4
+    print t3
+    print $ buildWalls t3 Walls
+    print $ addLord t3 Lord
+    let t2 = unbox $ buildCastle t3 Castle
+    print t2
+    let t5 = unbox $ addLord t2 Lord
+    print t5
+    let t6 = unbox $ buildWalls t5 Walls
+    print t6
 
 natTest :: IO()
 natTest = do
