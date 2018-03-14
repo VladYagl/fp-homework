@@ -4,6 +4,7 @@
 module Fold
        (
          Pair(..)
+       , NonEmpty(..)
        , splitOn
        , joinWith
        ) where
@@ -19,7 +20,7 @@ instance Foldable Pair where
     foldMap :: Monoid m => (a -> m) -> Pair a -> m
     foldMap f (Pair x y) = (f x) `mappend` (f y)
 
-data NonEmpty a = a :| [a] deriving Show
+data NonEmpty a = a :| [a]
 
 instance Foldable NonEmpty where
     foldr :: (a -> b -> b) -> b -> NonEmpty a -> b

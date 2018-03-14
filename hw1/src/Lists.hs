@@ -1,13 +1,7 @@
 module Lists
-       ( randomIntList
-       , deleteAt
+       ( deleteAt
        , mergeSort
        ) where
-
-import System.Random (newStdGen, randomRs)
-
-randomIntList :: Int -> Int -> Int -> IO [Int]
-randomIntList n from to = take n . randomRs (from, to) <$> newStdGen
 
 deleteAt :: Int -> [a] -> (a, [a])
 deleteAt _ []         = error "No such element"

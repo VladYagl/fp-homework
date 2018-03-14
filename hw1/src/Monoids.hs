@@ -3,10 +3,11 @@
 
 module Monoids
        (
-         maybeConcat
-       , eitherConcat
-       , Endo(..)
+         Endo(..)
        , Name(..)
+       , Builder(..)
+       , maybeConcat
+       , eitherConcat
        , fromString
        , toString
        ) where
