@@ -9,7 +9,7 @@ module Weekday
 data Weekday = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday deriving (Enum, Show)
 
 afterDays :: Weekday -> Int -> Weekday
-afterDays day count = toEnum (((fromEnum day) + count) `mod` 7)
+afterDays day count = toEnum ((fromEnum day + count) `mod` 7)
 
 nextDay :: Weekday -> Weekday
 nextDay = flip afterDays 1

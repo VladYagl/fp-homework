@@ -53,12 +53,12 @@ instance Monoid Builder where
     mempty = Many []
 
     Many as `mappend` x = Many (as ++ [x])
-    x `mappend` Many as = Many ([x] ++ as)
+    x `mappend` Many as = Many (x : as)
     One x `mappend` One y = Many [One x, One y]
 
 fromString :: String -> Builder
-fromString = mconcat . map (\char -> One char)
+fromString = mconcat . map One
 
 toString :: Builder -> String
 toString (One a)   = [a]
-toString (Many xs) = concat (map toString xs)
+toString (Many xs) = concatMap toString xs

@@ -36,7 +36,7 @@ instance Ord Nat where
 
 toInt :: Nat -> Int
 toInt Z     = 0
-toInt (S a) = 1 + (toInt a)
+toInt (S a) = 1 + toInt a
 
 instance Real Nat where
     toRational a = toRational (toInt a)
@@ -52,7 +52,7 @@ instance Integral Nat where
     quot _ Z = error "division by Z"
     quot a b
         | a < b = Z
-        | otherwise = S(Z) + quot (a - b) b
+        | otherwise = S Z + quot (a - b) b
 
     rem _ Z = error "division by Z"
     rem a b

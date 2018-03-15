@@ -32,14 +32,14 @@ randomIntList n from to = take n . randomRs (from, to) <$> newStdGen
 printTree :: Show a => Tree a -> Int -> String
 printTree Leaf _         = "Leaf\n"
 printTree Node{..} level =
-    replicate level '|' ++ "Node: " ++ (show info) ++ "\n" ++ printTree left (level + 1) ++ printTree right (level + 1)
+    replicate level '|' ++ "Node: " ++ show info ++ "\n" ++ printTree left (level + 1) ++ printTree right (level + 1)
 
 instance (Show a) => Show (Tree a) where
     show t = printTree t 0
 
 deriving instance Show a => Show (NonEmpty a)
-deriving instance Show (Name)
-deriving instance Show (Builder)
+deriving instance Show Name
+deriving instance Show Builder
 
 monoidTest :: IO()
 monoidTest = do
@@ -47,7 +47,7 @@ monoidTest = do
     print $ eitherConcat [Left (Sum 3), Right [1,2,3], Left (Sum 5 :: Sum Int), Right [4,5 :: Int]]
     print $ Name "root" <> Name "server"
     print (fromString "test String" :: Builder)
-    print $ toString $ (fromString "test String" :: Builder)
+    print $ toString (fromString "test String" :: Builder)
 
 foldTest :: IO()
 foldTest = do
@@ -94,10 +94,10 @@ townTest = do
 
 natTest :: IO()
 natTest = do
-    let i11 = fromInteger 11 :: Nat
-    let i2  = fromInteger 2 :: Nat
-    let i5 = fromInteger 5 :: Nat
-    let i3 = fromInteger 3 :: Nat
+    let i11 = 11 :: Nat
+    let i2  = 2 :: Nat
+    let i5 = 5 :: Nat
+    let i3 = 3 :: Nat
     print (i11 >= i2 * i5)
     print (toInteger (i11 `quot` i3) == 11 `quot` 3)
     print (toInteger (i11 `mod` i3) == 11 `mod` 3)
