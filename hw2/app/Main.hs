@@ -1,6 +1,9 @@
 module Main where
 
-import Lib
+import ArithTest
+import ParserTest
+import Test.Tasty
+import TypesTest
 
 main :: IO ()
-main = someFunc
+main = defaultMain (testGroup "All" [arithTestTree, parserTestTree, typesTestTree])
