@@ -65,7 +65,7 @@ stream = foldr (add . element) ([] <$ ok)
 bracketSeq :: Parser Char ()
 bracketSeq = brackets *> eof
   where
-    brackets = (brackets <* brackets) <|> element '(' <* brackets <* element ')' <|> ' ' <$ stream ""
+    brackets = many (element '(' <* brackets <* element ')')
 
 -- *************** --
 
@@ -75,8 +75,8 @@ digit = digitToInt <$> satisfy isDigit
 
 integer :: Parser Char Int
 integer = sign <*> (foldl (\rest a -> rest * 10 + a) 0 <$> some digit)
-    where
-        sign = id <$ element '+' <|> negate <$ element '-' <|> id <$ ok
+  where
+    sign = id <$ element '+' <|> negate <$ element '-' <|> id <$ ok
 
 
 whiteSpace :: Parser Char ()
