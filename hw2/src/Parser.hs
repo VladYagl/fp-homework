@@ -54,11 +54,8 @@ satisfy p = Parser $ \case
 element :: (Eq s) => s -> Parser s s
 element c = satisfy (== c)
 
-add :: Parser s a -> Parser s [a] -> Parser s [a]
-add a as = (:) <$> a <*> as
-
 stream :: (Eq s) => [s] -> Parser s [s]
-stream = foldr (add . element) ([] <$ ok)
+stream = foldr (liftA2 (:) . element) ([] <$ ok)
 
 -- *************** --
 
