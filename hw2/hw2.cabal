@@ -27,7 +27,7 @@ executable hw2
   hs-source-dirs:      app
   main-is:             Main.hs
   ghc-options:         -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
-  other-modules:       ArithTest, TypesTest
+  other-modules:       ArithTest, TypesTest, ParserTest
   build-depends:       base
                      , hw2
                      , tasty

@@ -1,0 +1,6 @@
+mut ans = 1
+> n
+for i = 1 to n {
+    ans = ans * i
+}
+< ans

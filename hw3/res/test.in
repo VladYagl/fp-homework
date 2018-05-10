@@ -1,0 +1,17 @@
+mut sum = 0
+for i = 1 to 10 {
+    sum = sum + i
+}
+< sum
+
+for i = 1 to 10 {
+    < i
+}
+< i 
+
+> gay
+mut x = 2
+mut y = x * x
+x = 12 + (let y = 2 in y * y) / gay
+
+< x + y + (let z = x in 0 - z) / 2

@@ -1,0 +1,12 @@
+> n
+mut preLast = 0
+mut last = 1
+mut temp = -1
+
+for i = 1 to n - 1 {
+    temp = last
+    last = last + preLast
+    preLast = temp
+}
+
+< last
