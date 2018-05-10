@@ -21,10 +21,6 @@ typesTestTree = testGroup "Types" [
               testProperty "left indentity" leftIdentityProp
             , testProperty "right indentity" rightIdentityProp
             , testProperty "Associativity" associativityProp
-            , testProperty "Functor id" idFunctorProp
-            , testProperty "Functor compose" composeFunctorProp
-            , testProperty "Applicative id" idApplicativeProp
-            , testProperty "Traversable" traversableProp
         ]
     ]
 
