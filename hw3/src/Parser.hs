@@ -61,6 +61,7 @@ initlet = (\_ var _ value _ expr -> Let var value expr) <$>
 
 operator :: Parser Oper
 operator = (\_ var _ expr -> Init var expr) <$> symbol "mut" <*> name <*> symbol "=" <*> expression
+    <|> const Break <$> symbol "break"
     <|> (\_ var _ from _ to _ list _ -> For var from to list)
         <$> symbol "for" <*> name <*> symbol "=" <*> expression <*> symbol "to"
         <*> expression <*> symbol "{" <*> many operator <*> symbol "}"

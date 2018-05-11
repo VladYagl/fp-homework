@@ -1,6 +1,9 @@
+{-# LANGUAGE LambdaCase #-}
+
 module Main where
 
 import Control.Exception
+import Control.Monad.Cont
 import Control.Monad.Except
 import Control.Monad.State
 import qualified Data.Map.Strict as Map
@@ -18,11 +21,10 @@ main :: IO ()
 main = do
     args <- getArgs
     input <- Text.readFile (head args)
-    let operators = parse file (head args) input
-    case operators of
+    let result = parse file (head args) input
+    case result of
         Left e  -> throwIO e
-        Right opers -> do
-            result <- runExceptT $ runStateT (interpret opers) Map.empty
-            case result of
-                Left e  -> throwIO e
-                Right _ -> return ()
+        Right operators ->
+            runExceptT (runStateT (interpret operators) Map.empty) `runContT`
+                \case Left e  -> throwIO e
+                      Right _ -> return ()

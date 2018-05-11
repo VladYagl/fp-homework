@@ -7,6 +7,7 @@ module Operators
        , interpret
        ) where
 
+import Control.Monad.Cont
 import Control.Monad.Except
 import Control.Monad.Reader
 import Control.Monad.State
@@ -21,34 +22,34 @@ data Oper = Init VarName Expr
           | Print Expr
           | Read VarName
           | For VarName Expr Expr [Oper]
+          | Break
           deriving (Eq, Show)
 
-interpret :: (MonadError LangError m, MonadState VarEnv m, MonadIO m) => [Oper] -> m ()
-interpret = doSteps 1
+interpret :: (MonadError LangError m, MonadState VarEnv m, MonadIO m, MonadCont m) => [Oper] -> m ()
+interpret list = callCC $ \stop -> doSteps 1 list stop
   where
-    doSteps :: (MonadError LangError m, MonadState VarEnv m, MonadIO m) => Int -> [Oper] -> m ()
-    doSteps pos (x:xs) = do
-        step x `catchError` (\e -> throwError $ InterpretError e pos)
-        doSteps (pos + 1) xs
-    doSteps _ [] = return ()
+    doSteps pos (x:xs) stop = do
+        step x stop `catchError` (\e -> throwError $ InterpretError e pos)
+        doSteps (pos + 1) xs stop
+    doSteps _ [] _ = return ()
 
-    step :: (MonadError LangError m, MonadState VarEnv m, MonadIO m) => Oper -> m ()
-    step (Init name expr) = do
+    step (Init name expr) _ = do
         vars <- get
         value <- runReaderT (eval expr) vars
         initialize name value
-    step (Set name expr) = do
+    step (Set name expr) _ = do
         vars <- get
         value <- runReaderT (eval expr) vars
         set name value
-    step (Read name) = do
+    step (Read name) _ = do
         value <- liftIO readLn
         initialize name value
-    step (Print expr) = do
+    step (Print expr) _ = do
         vars <- get
         value <- runReaderT (eval expr) vars
         liftIO $ print value
-    step (For var fromExpr toExpr opers) = do
+    step Break stop = stop ()
+    step (For var fromExpr toExpr opers) _ = do
         vars <- get
         from <- runReaderT (eval fromExpr) vars
         to <- runReaderT (eval toExpr) vars

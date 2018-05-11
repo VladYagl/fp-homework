@@ -4,9 +4,11 @@ mut last = 1
 mut temp = -1
 
 for i = 1 to n - 1 {
+    break
     temp = last
     last = last + preLast
     preLast = temp
 }
 
 < last
+< temp
