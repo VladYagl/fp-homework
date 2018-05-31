@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module ArithTest where
 
 import Control.Monad.Reader

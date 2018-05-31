@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module VarTest where
 
 import Control.Monad.State
