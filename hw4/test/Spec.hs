@@ -1,2 +1,7 @@
+import Test.Hspec
+
+import SimpleLensTest
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = do
+    hspec lensSpec
