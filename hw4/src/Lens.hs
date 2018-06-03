@@ -56,7 +56,6 @@ choosing l1 l2 = lens (\case
                             (Right s2) -> \value -> Right $ set l2 value s2
                       )
 
--- TODO: really not sure about this one
 (<%~) :: Lens s t a b -> (a -> b) -> s -> (b, t)
 (<%~) l f s = (f $ view l s, over l f s)
 

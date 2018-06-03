@@ -11,7 +11,6 @@ import Walk
 
 main :: IO ()
 main = do
-    -- putStrLn $ join getArgs
     path : _ <- getArgs
     fs <- scanFS path
     Left e <- runExceptT (runStateT (repl) (fs :| [], fileCount fs, dirCount fs))
